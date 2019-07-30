@@ -384,7 +384,7 @@ Begin VB.Form PGM_Menu
    End
    Begin VB.Label Label1 
       BackColor       =   &H00E0E0E0&
-      Caption         =   "NQD-70_VerTBK111103"
+      Caption         =   "NQD-70_VerTBK130427"
       BeginProperty Font 
          Name            =   "ＭＳ Ｐゴシック"
          Size            =   12
@@ -961,7 +961,9 @@ Attribute VB_Exposed = False
 '       Ver.NQD_71_090714 2009.07.14 s.f  System not ready 多発のため　名前変更
 '       Ver.NQD_71_101119 2010.11.19 s.f  Timeupの処理のみ　TE100719版からコピー
 '       Ver.NQD_71_111103 2011.11.03 s.f  予備加熱上下　上未到達メッセージ追加（元ＡＬＭ１５）
-'
+'       Ver.NQD_71_130425 2013.04.25 s.f  成形時間　３０分以上を可能にする。　apre(1801)ほか、temp(2000)ほか　を　配列12000へ
+'                                         dataﾌｧｲﾙ名に時間追加
+'       Ver.NQD_71_130427 2013.04.27 s.f  ﾌｧｲﾙ名バグ対策
 '******************************************************************************
 Option Explicit
 '

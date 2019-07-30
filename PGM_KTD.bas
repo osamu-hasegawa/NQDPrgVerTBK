@@ -33,12 +33,13 @@ Option Explicit
 Global InitDat!(0 To 50)               '保存データ
 Global InitStr$(0 To 50)
 '
-Global TPass!(0 To 2000)                '経過時間(秒)
-Global ZAxis!(0 To 2000)                '座標（Z-軸）
-Global Press!(0 To 2000)                '型締圧
-Global Templ!(0 To 2000)                '型温度
-Global Templu!(0 To 2000)               '型温度 上
-Global Templd!(0 To 2000)               '型温度 下
+Global TPass!(0 To 12000)                '経過時間(秒)
+Global ZAxis!(0 To 12000)                '座標（Z-軸）
+Global Press!(0 To 12000)                '型締圧
+Global Templ!(0 To 12000)                '型温度
+Global Templu!(0 To 12000)               '型温度 上
+Global Templd!(0 To 12000)               '型温度 下
+Global Const ResDtSize = 12000
 Global BrdFlg$
 Global StartTime!                       'Debug用
 Global GCnt0%                           '成形中データカウンタ
@@ -136,9 +137,9 @@ Global kataNoHyj$(0 To 36)                    ' 型Ｎｏ．　表示用リングバッファ
 Global kataNoPnt As Integer                     '　型No.　ポインター
 Global katamax                          ' 成形機内の　ステーション数
 '--------------- [QD61]LS21_S.C で定義してある変数
-Global atemp!(0 To 1801, 0 To 2)
-Global aposi!(0 To 1801)
-Global apre!(0 To 1801)
+Global atemp!(0 To 12000, 0 To 2)
+Global aposi!(0 To 12000)
+Global apre!(0 To 12000)
 Global roz!(2)               '　突当成形ﾊﾟﾗﾒｰﾀ　幅,時間
 Global ivd%, id_0%, id_1%, id_2%
 '
@@ -419,7 +420,8 @@ Dim j%, fnum%, sdt$
 Dim fDir$, flNm$
   fnum = FreeFile
   fDir = App.path & "\..\data\"
-  FlNmRecDt = "LS" & Mid(Date, 6, 2) & Mid(Date, 9, 2) & Format(Int(icnt), "0") & ".lsl"
+'  FlNmRecDt = "LS" & Mid(Date, 6, 2) & Mid(Date, 9, 2) & Mid(Time, 1, 2) & Mid(Time, 4, 2) & Format(Int(icnt), "0") & ".lsl"
+  FlNmRecDt = "LS" & Format$(Now, "yymmddhhmmss") & Format(Int(icnt), "0") & ".lsl"
   sdt = " No.     Z3         ct1    ct2"
   sdt = sdt & "      cc1     cc2    cc3"
   sdt = sdt & "    cc3-2     cp         ﾀｸﾄ     T係数    Z3補正"
@@ -628,7 +630,7 @@ Private Sub DebugData()
 Dim i%
 Dim z!, p!, t!, x!
 '
-  For i = 0 To 2000
+  For i = 0 To ResDtSize
     TPass(i) = i                '経過時間(秒)
     ZAxis(i) = 50 + 40 * Sin(i / 57.325)              '座標（Z-軸）
     Press(i) = i / 2000              '型締圧
