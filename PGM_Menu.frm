@@ -14,6 +14,24 @@ Begin VB.Form PGM_Menu
    ScaleHeight     =   6408
    ScaleWidth      =   8304
    StartUpPosition =   3  'Windows の既定値
+   Begin VB.CommandButton Command2 
+      Caption         =   "Comment"
+      BeginProperty Font 
+         Name            =   "ＭＳ Ｐゴシック"
+         Size            =   9
+         Charset         =   128
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   300
+      Index           =   2
+      Left            =   5600
+      TabIndex        =   43
+      Top             =   5760
+      Width           =   1000
+   End
    Begin VB.CommandButton Command4 
       Caption         =   "C870Reset"
       Enabled         =   0   'False
@@ -209,7 +227,7 @@ Begin VB.Form PGM_Menu
       Left            =   240
       TabIndex        =   22
       Top             =   5760
-      Width           =   2244
+      Width           =   2000
    End
    Begin VB.Timer Timer1 
       Interval        =   500
@@ -247,10 +265,10 @@ Begin VB.Form PGM_Menu
       EndProperty
       Height          =   300
       Index           =   6
-      Left            =   6444
+      Left            =   6700
       TabIndex        =   18
       Top             =   5760
-      Width           =   1236
+      Width           =   1000
    End
    Begin VB.CommandButton Command2 
       Caption         =   "edit"
@@ -265,10 +283,10 @@ Begin VB.Form PGM_Menu
       EndProperty
       Height          =   300
       Index           =   5
-      Left            =   5148
+      Left            =   4500
       TabIndex        =   17
       Top             =   5760
-      Width           =   1236
+      Width           =   1000
    End
    Begin VB.CommandButton Command2 
       Caption         =   "メモ帳"
@@ -283,10 +301,10 @@ Begin VB.Form PGM_Menu
       EndProperty
       Height          =   300
       Index           =   4
-      Left            =   3852
+      Left            =   3400
       TabIndex        =   16
       Top             =   5760
-      Width           =   1236
+      Width           =   1000
    End
    Begin VB.CommandButton Command2 
       Caption         =   "読出し"
@@ -301,10 +319,10 @@ Begin VB.Form PGM_Menu
       EndProperty
       Height          =   300
       Index           =   3
-      Left            =   2556
+      Left            =   2300
       TabIndex        =   15
       Top             =   5760
-      Width           =   1236
+      Width           =   1000
    End
    Begin VB.CommandButton Command1 
       Caption         =   "I O チェック"
@@ -384,7 +402,7 @@ Begin VB.Form PGM_Menu
    End
    Begin VB.Label Label1 
       BackColor       =   &H00E0E0E0&
-      Caption         =   "NQD-70_VerTBK130427"
+      Caption         =   "NQD-70_VerTBK130516"
       BeginProperty Font 
          Name            =   "ＭＳ Ｐゴシック"
          Size            =   12
@@ -964,6 +982,7 @@ Attribute VB_Exposed = False
 '       Ver.NQD_71_130425 2013.04.25 s.f  成形時間　３０分以上を可能にする。　apre(1801)ほか、temp(2000)ほか　を　配列12000へ
 '                                         dataﾌｧｲﾙ名に時間追加
 '       Ver.NQD_71_130427 2013.04.27 s.f  ﾌｧｲﾙ名バグ対策
+'       Ver.NQD_71_130516 2013.05.16 s.f  コメント記入　記入追加
 '******************************************************************************
 Option Explicit
 '
@@ -1042,6 +1061,9 @@ Private Sub Command2_Click(Index As Integer)
       SuireiOFF
       PltPrns TrnsMax
     End If
+  Case 2  'comment記入
+    FrmMenuFlg = False                    'メニューから抜けるときfalse
+    NextView = 9                           '
   Case 3  '読み出し
     FrmMenuFlg = False                    'メニューから抜けるときfalse
     NextView = 6                           '
@@ -1461,6 +1483,9 @@ OrgExec:
     Case 8  'edit
       Unload Me
       MYEdit.Show
+    Case 9  'Comment記入
+      ExecMemo gcoxFldir, gcoxFlName + ".txt"
+      GoTo OrgExec:
     End Select
   End If
 End Sub
